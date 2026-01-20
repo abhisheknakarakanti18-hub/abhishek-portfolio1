@@ -10,58 +10,586 @@
       --bg0:#070A12;
       --bg1:#0B1020;
       --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.08);
       --line:rgba(255,255,255,.12);
       --text:#EAF2FF;
       --muted:#B7C7E6;
-      --brand1:#7C3AED;
-      --brand2:#06B6D4;
-      --brand3:#22C55E;
+      --brand1:#7C3AED; /* violet */
+      --brand2:#06B6D4; /* cyan */
+      --brand3:#22C55E; /* green */
+      --warn:#F59E0B;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius:18px;
     }
+
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:system-ui,Arial;
       color:var(--text);
-      background:linear-gradient(180deg,var(--bg0),var(--bg1));
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1000px 600px at 15% 10%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 520px at 85% 15%, rgba(6,182,212,.28), transparent 55%),
+        radial-gradient(900px 520px at 40% 90%, rgba(34,197,94,.18), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
     }
+
     a{color:inherit}
-    .wrap{max-width:1100px;margin:auto;padding:24px}
-    .hero{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:24px;
+    .wrap{max-width:1100px;margin:0 auto;padding:20px 18px 80px}
+
+    /* Top nav */
+    .nav{
+      position:sticky; top:10px; z-index:50;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 14px;
       border:1px solid var(--line);
-      border-radius:18px;
-      padding:28px;
-      background:rgba(255,255,255,.05);
+      border-radius:999px;
+      background: rgba(10,14,26,.55);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.35);
     }
-    h1{font-size:44px;margin:0}
-    p{color:var(--muted);line-height:1.6}
-    img{width:100%;height:100%;object-fit:cover;border-radius:16px}
-    @media(max-width:900px){
-      .hero{grid-template-columns:1fr}
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px;
     }
+    .dot{
+      width:12px;height:12px;border-radius:999px;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 0 0 4px rgba(124,58,237,.18);
+    }
+    .navlinks{display:flex; gap:14px; flex-wrap:wrap}
+    .navlinks a{
+      text-decoration:none;
+      color:var(--muted);
+      font-size:13px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid transparent;
+    }
+    .navlinks a:hover{
+      color:var(--text);
+      border-color:var(--line);
+      background:rgba(255,255,255,.03);
+    }
+    .cta-mini{
+      display:flex; gap:10px; align-items:center;
+    }
+    .pill{
+      text-decoration:none;
+      font-size:13px;
+      font-weight:700;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+    }
+    .pill.primary{
+      border-color: rgba(6,182,212,.45);
+      background: rgba(6,182,212,.14);
+    }
+
+    /* Hero */
+    .hero{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 250px at 20% 20%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(520px 260px at 80% 20%, rgba(6,182,212,.25), transparent 60%),
+        radial-gradient(520px 260px at 50% 90%, rgba(34,197,94,.18), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-inner{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      padding:26px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){
+      .hero-inner{grid-template-columns:1fr}
+      .cta-mini{display:none}
+    }
+
+    .title{
+      font-size:44px; line-height:1.05; margin:0 0 8px; font-weight:900;
+      letter-spacing:-.6px;
+    }
+    .subtitle{
+      color:var(--muted);
+      margin:0;
+      line-height:1.7;
+      font-size:15px;
+    }
+    .meta-row{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+      margin-top:14px;
+    }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .chip b{color:var(--text)}
+    .buttons{
+      display:flex; flex-wrap:wrap; gap:10px; margin-top:16px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      text-decoration:none;
+      font-weight:800;
+      font-size:14px;
+      padding:11px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06)}
+    .btn.primary{
+      border-color: rgba(124,58,237,.55);
+      background: linear-gradient(135deg, rgba(124,58,237,.22), rgba(6,182,212,.12));
+    }
+    .btn.green{
+      border-color: rgba(34,197,94,.55);
+      background: rgba(34,197,94,.14);
+    }
+
+    .photo{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+      background: rgba(0,0,0,.15);
+      min-height: 280px;
+      display:flex; align-items:stretch;
+    }
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: saturate(1.05) contrast(1.05);
+    }
+
+    /* Section layout */
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .card{
+      grid-column: span 12;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background: rgba(255,255,255,.05);
+      padding:18px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.25);
+    }
+    .card.soft{background: rgba(255,255,255,.04)}
+    .card h2{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    .kicker{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:-6px;
+    }
+    .cols-6{grid-column: span 6}
+    .cols-4{grid-column: span 4}
+    @media (max-width: 920px){
+      .cols-6,.cols-4{grid-column: span 12}
+    }
+
+    .badges{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
+    .badge{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+    }
+    .badge.violet{border-color: rgba(124,58,237,.45); background: rgba(124,58,237,.12)}
+    .badge.cyan{border-color: rgba(6,182,212,.45); background: rgba(6,182,212,.10)}
+    .badge.green{border-color: rgba(34,197,94,.45); background: rgba(34,197,94,.10)}
+    .badge.gold{border-color: rgba(245,158,11,.45); background: rgba(245,158,11,.10)}
+
+    .list{margin:10px 0 0 18px; color:var(--muted); line-height:1.7}
+    .list li{margin:6px 0}
+
+    .split{
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .small{color:var(--muted); font-size:13px}
+    .strong{font-weight:900}
+
+    /* Timeline-ish items */
+    .item{
+      padding:14px;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:16px;
+      background: rgba(255,255,255,.03);
+      margin-top:10px;
+    }
+    .item .top{
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      align-items:baseline;
+    }
+    .item .role{font-weight:900}
+    .item .org{color:var(--muted); font-size:13px}
+    .item .when{color:var(--muted); font-size:13px}
+
+    /* Divider */
+    .divider{
+      height:1px; background: var(--line);
+      margin:16px 0 10px;
+    }
+
+    /* Footer */
+    footer{
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .footlinks{display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:10px}
+    .footlinks a{color:var(--muted); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.16)}
+    .footlinks a:hover{color:var(--text)}
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <section class="hero">
-      <div>
-        <h1>Abhishek Nakarakanti</h1>
-        <p>
-          MBA candidate specializing in Business Analytics and Finance with experience in
-          client management, digital marketing analytics, CRM tracking, and KPI reporting.
-        </p>
-        <p>
-          <a href="resume.pdf">Download Resume</a> •
-          <a href="gpx-model.xlsx">GPX Model</a> •
-          <a href="https://www.linkedin.com/in/abhishek-nakarakanti-a47505172/" target="_blank">LinkedIn</a>
-        </p>
+
+    <!-- NAV -->
+    <div class="nav">
+      <div class="brand"><span class="dot"></span> Abhishek Nakarakanti</div>
+      <div class="navlinks">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
       </div>
-      <div>
-        <img src="profile.jpeg" alt="Abhishek Nakarakanti"/>
+      <div class="cta-mini">
+        <a class="pill" href="resume.pdf">Resume</a>
+        <a class="pill primary" href="#contact">Hire Me</a>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div>
+          <h1 class="title">Business Analyst • MBA (Analytics & Finance)</h1>
+          <p class="subtitle">
+            MBA candidate specializing in <span class="strong">Business Analytics and Finance</span> with a foundation in
+            Electronics & Communication Engineering. Experience across client management, digital marketing analytics,
+            CRM pipeline tracking, KPI reporting, and data-driven decision making.
+          </p>
+
+          <div class="meta-row">
+            <span class="chip">📍 <b>Chicago, IL</b></span>
+            <span class="chip">🎓 <b>Lewis University</b> (MBA)</span>
+            <span class="chip">📊 <b>Excel Models</b> & KPI Dashboards</span>
+            <span class="chip">📣 <b>Google Ads</b> + Meta Ads Analytics</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn primary" href="resume.pdf">⬇️ Download Resume</a>
+            <a class="btn" href="gpx-model.xlsx">📈 GPX Model</a>
+            <a class="btn green" href="https://www.linkedin.com/in/abhishek-nakarakanti-a47505172/" target="_blank" rel="noreferrer">🔗 LinkedIn</a>
+            <a class="btn" href="#projects">✨ View Projects</a>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Quick stats / highlights -->
+          <div class="badges">
+            <span class="badge violet">Excel • Pivot Tables • Financial Models</span>
+            <span class="badge cyan">KPI Reporting • Performance Tracking</span>
+            <span class="badge green">Stakeholder & Client Management</span>
+            <span class="badge gold">Ads Analytics • CPL • CTR • Lead Quality</span>
+          </div>
+        </div>
+
+        <div class="photo">
+          <!-- IMPORTANT: your image is JPEG, so we use profile.jpeg -->
+          <img src="profile.jpeg" alt="Abhishek Nakarakanti portrait"/>
+        </div>
       </div>
     </section>
+
+    <!-- GRID SECTIONS -->
+    <div class="grid">
+
+      <!-- ABOUT -->
+      <section class="card cols-6" id="about">
+        <h2>About</h2>
+        <p class="subtitle" style="margin:0">
+          I’m focused on analyst roles where I can combine <span class="strong">finance + business analytics</span>.
+          I enjoy building clean Excel models, tracking KPIs, and turning messy business data into clear recommendations
+          that help teams execute faster.
+        </p>
+        <div class="split">
+          <div class="small">Target roles: <span class="strong">Business Analyst • FP&A • Data Analyst (Business)</span></div>
+          <div class="small">Open to: <span class="strong">Chicago / Hybrid / Remote</span></div>
+        </div>
+      </section>
+
+      <!-- SUMMARY / QUALIFICATIONS -->
+      <section class="card cols-6 soft" id="summary">
+        <h2>Summary of Qualifications</h2>
+        <ul class="list">
+          <li>MBA candidate in <span class="strong">Business Analytics & Finance</span> with an engineering foundation.</li>
+          <li>Experience across business development, client management, digital marketing analytics, and performance tracking.</li>
+          <li>Strong quantitative & problem-solving skills; comfortable with KPI reporting and data interpretation.</li>
+          <li>Hands-on exposure to CRM workflows, sales operations, customer acquisition, and stakeholder communication.</li>
+          <li>Skilled at translating business and financial insights into actionable strategy.</li>
+        </ul>
+      </section>
+
+      <!-- SKILLS -->
+      <section class="card" id="skills">
+        <h2>Skills & Tools</h2>
+        <p class="kicker">Designed to match analyst job descriptions (ATS-friendly keywords)</p>
+        <div class="badges">
+          <span class="badge violet">Advanced Excel (Formulas, Pivots, Models)</span>
+          <span class="badge cyan">KPI Dashboards & Reporting</span>
+          <span class="badge cyan">Business Analytics & Data-Driven Decision Making</span>
+          <span class="badge green">Financial Analysis & Performance Evaluation</span>
+          <span class="badge green">Market Research & Customer Insights</span>
+          <span class="badge gold">Google Ads (Setup, Optimization, Analysis)</span>
+          <span class="badge gold">Meta Ads (Facebook/Instagram)</span>
+          <span class="badge violet">CRM Systems (Lead Pipeline Tracking)</span>
+          <span class="badge cyan">Stakeholder / Client Management</span>
+          <span class="badge green">Process Improvement & Operational Efficiency</span>
+          <span class="badge violet">PowerPoint Storytelling</span>
+          <span class="badge cyan">Google Docs/Sheets/Slides</span>
+        </div>
+        <div class="divider"></div>
+        <p class="small" style="margin:0">
+          Tip: If you use SQL/Python in class projects, we can add them here (only if you can discuss confidently in interviews).
+        </p>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section class="card" id="experience">
+        <h2>Experience</h2>
+
+        <div class="item">
+          <div class="top">
+            <div>
+              <div class="role">Client Manager & Digital Marketing Associate</div>
+              <div class="org">Real Estate Firm (Family Business) — India</div>
+            </div>
+            <div class="when">Nov 2022 – Nov 2023</div>
+          </div>
+          <ul class="list">
+            <li>Managed end-to-end client relationships: project presentations, pricing discussions, and payment negotiations.</li>
+            <li>Coordinated with banking partners to support pre-loan approvals and documentation.</li>
+            <li>Executed Google Ads and Facebook/Instagram (Meta) campaigns to generate inbound leads.</li>
+            <li>Tracked KPIs such as lead volume, cost metrics, and lead quality to improve campaign performance.</li>
+            <li>Managed property listings across real estate portals to increase visibility and lead flow.</li>
+            <li>Led a small cross-functional team of designers and web developers to deliver marketing assets.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="top">
+            <div>
+              <div class="role">Business Development Executive</div>
+              <div class="org">uFaber — India</div>
+            </div>
+            <div class="when">Jun 2022 – Oct 2022</div>
+          </div>
+          <ul class="list">
+            <li>Engaged prospects through structured sales conversations to explain service offerings and value.</li>
+            <li>Managed lead pipelines using CRM tools, tracking follow-ups, conversions, and responses.</li>
+            <li>Consistently worked toward outreach and conversion targets in a high-volume environment.</li>
+            <li>Strengthened negotiation, persuasion, and objection-handling skills; collaborated to improve conversion efficiency.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- LEADERSHIP -->
+      <section class="card cols-6" id="leadership">
+        <h2>Leadership</h2>
+
+        <div class="item">
+          <div class="top">
+            <div>
+              <div class="role">Team Lead — Media Department, University Club</div>
+              <div class="org">Bennett University</div>
+            </div>
+          </div>
+          <ul class="list">
+            <li>Led media planning and execution for student-led events and initiatives.</li>
+            <li>Coordinated content creation across creative teams; managed deadlines and delivery.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="top">
+            <div>
+              <div class="role">Soccer Team Captain</div>
+              <div class="org">Multiple Levels</div>
+            </div>
+          </div>
+          <ul class="list">
+            <li>Led teams across seasons; fostered discipline, teamwork, and performance under pressure.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- KEY COMPETENCIES -->
+      <section class="card cols-6 soft" id="competencies">
+        <h2>Key Competencies</h2>
+        <div class="badges">
+          <span class="badge cyan">Business Analytics</span>
+          <span class="badge green">Financial Analysis</span>
+          <span class="badge violet">Excel Modeling</span>
+          <span class="badge cyan">Reporting & Dashboards</span>
+          <span class="badge green">Performance Metrics</span>
+          <span class="badge gold">Marketing Analytics</span>
+          <span class="badge violet">CRM & Sales Operations</span>
+          <span class="badge cyan">Client & Stakeholder Management</span>
+          <span class="badge green">Strategic Planning</span>
+          <span class="badge violet">Cross-Functional Leadership</span>
+          <span class="badge cyan">Process Improvement</span>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="card" id="projects">
+        <h2>Projects</h2>
+
+        <div class="item">
+          <div class="top">
+            <div>
+              <div class="role">GPX Model (Excel Financial Model)</div>
+              <div class="org">Excel • Forecast Drivers • KPIs • Scenario Thinking</div>
+            </div>
+            <div class="when"><a class="btn" href="gpx-model.xlsx" style="padding:8px 10px;border-radius:12px;">📊 Download</a></div>
+          </div>
+          <ul class="list">
+            <li>Built an Excel-based GPX model to structure inputs, forecast key drivers, and evaluate performance scenarios.</li>
+            <li>Designed clean input/output sections with KPI tracking and scenario-style analysis for decision support.</li>
+          </ul>
+          <div class="small">If your GPX file is a PDF, rename the link above to <span class="strong">gpx-model.pdf</span>.</div>
+        </div>
+
+        <div class="item">
+          <div class="top">
+            <div>
+              <div class="role">Accenture Financial Statement Analysis (2021–2024)</div>
+              <div class="org">Excel • Ratio Analysis • Trend Analysis • DuPont</div>
+            </div>
+          </div>
+          <ul class="list">
+            <li>Analyzed profitability, efficiency, and leverage trends using Excel-based models.</li>
+            <li>Summarized insights into clear recommendations on performance drivers.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="top">
+            <div>
+              <div class="role">Marketing Campaign KPI Optimization</div>
+              <div class="org">Google Ads • Meta Ads • Lead Quality • Cost Metrics</div>
+            </div>
+          </div>
+          <ul class="list">
+            <li>Reviewed performance metrics and improved campaign outcomes based on lead quality and cost per lead.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section class="card" id="education">
+        <h2>Education</h2>
+
+        <div class="item">
+          <div class="top">
+            <div>
+              <div class="role">Master of Business Administration (MBA)</div>
+              <div class="org">Lewis University — Romeoville, IL</div>
+            </div>
+            <div class="when">Dec 2025</div>
+          </div>
+          <div class="badges">
+            <span class="badge cyan">Micro-credentials: Finance</span>
+            <span class="badge green">Micro-credentials: Business Analytics</span>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="top">
+            <div>
+              <div class="role">Electronics & Communication Engineering</div>
+              <div class="org">Bennett University — Delhi</div>
+            </div>
+            <div class="when">May 2022</div>
+          </div>
+          <div class="badges">
+            <span class="badge violet">Minor: Entrepreneurship</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="card soft" id="contact">
+        <h2>Contact</h2>
+        <p class="subtitle" style="margin:0">
+          Email: <a href="mailto:YOUR_EMAIL_HERE" style="color:var(--text)">YOUR_EMAIL_HERE</a><br/>
+          LinkedIn: <a href="https://www.linkedin.com/in/abhishek-nakarakanti-a47505172/" target="_blank" rel="noreferrer" style="color:var(--text)">
+            abhishek-nakarakanti
+          </a>
+        </p>
+
+        <div class="buttons" style="margin-top:14px">
+          <a class="btn primary" href="resume.pdf">⬇️ Resume PDF</a>
+          <a class="btn" href="#top">⬆️ Back to Top</a>
+        </div>
+
+        <p class="small" style="margin-top:10px">
+          Replace <span class="strong">YOUR_EMAIL_HERE</span> in this file with your real email before publishing.
+        </p>
+      </section>
+
+    </div>
+
+    <footer>
+      © <span id="year"></span> Abhishek Nakarakanti
+      <div class="footlinks">
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="resume.pdf">Resume</a>
+      </div>
+    </footer>
+
   </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
